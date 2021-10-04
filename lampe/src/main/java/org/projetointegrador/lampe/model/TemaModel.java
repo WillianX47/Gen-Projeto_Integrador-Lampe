@@ -16,15 +16,12 @@ public class TemaModel {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@NotBlank
 	@Size(min = 5, max = 100)
 	private String primarioTema;
 	
-	@NotBlank
 	@Size(min = 5, max = 100)
 	private String secundarioTema;
 	
-	@NotBlank
 	@Size(min = 5, max = 100)
 	private String eventosTema;
 
