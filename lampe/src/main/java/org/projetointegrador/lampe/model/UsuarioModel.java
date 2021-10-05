@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 @CrossOrigin("*")
 public class UsuarioModel {
 
-private @Id @GeneratedValue(strategy = GenerationType.IDENTITY) Long id;
+	private @Id @GeneratedValue(strategy = GenerationType.IDENTITY) Long id;
 	
 	private @NotBlank String nomeUsuario;
 	
