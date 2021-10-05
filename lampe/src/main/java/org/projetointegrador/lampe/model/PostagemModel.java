@@ -4,10 +4,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "tb_postagem")
@@ -23,6 +27,32 @@ public class PostagemModel {
 	private @NotBlank String privacidade;
 
 	private String localizacaoPostagem;
+	
+	@ManyToOne
+	@JoinColumn(name = "tema_id")
+	@JsonIgnoreProperties({"postagens"})
+	private @NotBlank TemaModel temaPostagem;
+	
+	@ManyToOne
+	@JoinColumn(name = "usuario_id")
+	@JsonIgnoreProperties({"postagens"})
+	private @NotBlank UsuarioModel usuarioPostagem;
+	
+	public TemaModel getTemaPostagem() {
+		return temaPostagem;
+	}
+	
+	public void setTemaPostagem(TemaModel temaPostagem) {
+		this.temaPostagem = temaPostagem;
+	}
+
+	public UsuarioModel getUsuarioPostagem() {
+		return usuarioPostagem;
+	}
+
+	public void setUsuarioPostagem(UsuarioModel usuarioPostagem) {
+		this.usuarioPostagem = usuarioPostagem;
+	}
 
 	public Long getId() {
 		return id;
