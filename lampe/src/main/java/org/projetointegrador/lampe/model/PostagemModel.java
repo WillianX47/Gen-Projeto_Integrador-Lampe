@@ -33,6 +33,9 @@ public class PostagemModel {
 	@JsonIgnoreProperties({"postagens"})
 	private @NotBlank TemaModel temaPostagem;
 	
+	@ManyToOne
+	@JoinColumn(name = "usuario_id")
+	@JsonIgnoreProperties({"postagens"})
 	private @NotBlank UsuarioModel usuarioPostagem;
 	
 	public TemaModel getTemaPostagem() {
