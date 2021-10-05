@@ -1,12 +1,18 @@
 package org.projetointegrador.lampe.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "tb_tema")
@@ -24,6 +30,18 @@ public class TemaModel {
 	
 	@Size(min = 5, max = 100)
 	private String eventosTema;
+	
+	@OneToMany(mappedBy = "temaPostagem", cascade = CascadeType.REMOVE)
+	@JsonIgnoreProperties({"temaPostagem"})
+	private List<PostagemModel> postagens = new ArrayList<>();
+
+	public List<PostagemModel> getPostagens() {
+		return postagens;
+	}
+
+	public void setPostagens(List<PostagemModel> postagens) {
+		this.postagens = postagens;
+	}
 
 	public Long getId() {
 		return id;
