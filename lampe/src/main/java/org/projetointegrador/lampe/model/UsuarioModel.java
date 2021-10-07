@@ -7,11 +7,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
-
 @Entity
 @Table(name = "tb_usuario")
-@CrossOrigin("*")
 public class UsuarioModel {
 
 	private @Id @GeneratedValue(strategy = GenerationType.IDENTITY) Long id;
