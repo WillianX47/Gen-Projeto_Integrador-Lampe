@@ -48,6 +48,12 @@ public class UsuarioController {
 		return service.logar(user).map(resp -> ResponseEntity.ok(resp))
 				.orElse(ResponseEntity.status(HttpStatus.UNAUTHORIZED).build());
 	}
+	
+	@PostMapping("/cadastrar")
+	public ResponseEntity<UsuarioModel> Post(@RequestBody UsuarioModel user){
+		return ResponseEntity.status(HttpStatus.CREATED)
+				.body(service.cadastrarUsuario(user));
+	}
 
 	@PutMapping("/atualizar")
 	public ResponseEntity<UsuarioModel> alterarUsuario(@Valid @RequestBody UsuarioModel alterarUsuario) {
