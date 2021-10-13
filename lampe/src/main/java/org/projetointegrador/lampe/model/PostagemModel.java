@@ -28,12 +28,12 @@ public class PostagemModel {
 	@ManyToOne
 	@JoinColumn(name = "tema_id")
 	@JsonIgnoreProperties({"postagens"})
-	private @NotBlank TemaModel temaPostagem;
+	private TemaModel temaPostagem;
 	
 	@ManyToOne
 	@JoinColumn(name = "usuario_id")
 	@JsonIgnoreProperties({"postagens"})
-	private @NotBlank UsuarioModel usuarioPostagem;
+	private UsuarioModel usuarioPostagem;
 	
 	public TemaModel getTemaPostagem() {
 		return temaPostagem;
