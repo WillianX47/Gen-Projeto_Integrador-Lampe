@@ -41,7 +41,7 @@ public class UsuarioService {
 				return user;
 			}
 		}
-		return null;
+		return Optional.empty();
 	}
 
 }
