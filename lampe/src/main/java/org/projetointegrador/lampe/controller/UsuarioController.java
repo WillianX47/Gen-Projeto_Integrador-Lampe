@@ -38,8 +38,8 @@ public class UsuarioController {
 	private @Autowired UsuarioService service;
 
 	@ApiOperation(value = "Procura todos os usuários cadastrados no sistema")
-    @ApiResponses(value = { @ApiResponse(code = 200, message = "Usuários encontrados"),
-    @ApiResponse(code = 204, message = "Não existe usuários no sistema") })
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Usuários encontrados"),
+			@ApiResponse(code = 204, message = "Não existe usuários no sistema") })
 	@GetMapping
 	public ResponseEntity<List<UsuarioModel>> findAll() {
 		List<UsuarioModel> objetoUsuario = repositorio.findAll();
@@ -53,34 +53,36 @@ public class UsuarioController {
 	}
 
 	@ApiOperation(value = "Executa o login de usuario")
-    @ApiResponses(value = { @ApiResponse(code = 200, message = "Login efetuado"),
-    @ApiResponse(code = 401, message = "Usuario ou senha incorreto") })
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Login efetuado"),
+			@ApiResponse(code = 401, message = "Usuario ou senha incorreto") })
 	@PostMapping("/login")
 	public ResponseEntity<UsuarioLogin> Autentication(@RequestBody Optional<UsuarioLogin> user) {
 		return service.logar(user).map(resp -> ResponseEntity.ok(resp))
 				.orElse(ResponseEntity.status(HttpStatus.UNAUTHORIZED).build());
 	}
+
 	@ApiOperation(value = "Realiza o cadastro de usuario")
-    @ApiResponses(value = { @ApiResponse(code = 201, message = "Cadastro efetuado"),
-    @ApiResponse(code = 400, message = "Usuário já existe no sistema") })
+	@ApiResponses(value = { @ApiResponse(code = 201, message = "Cadastro efetuado"),
+			@ApiResponse(code = 400, message = "Usuário já existe no sistema") })
 	@PostMapping("/cadastrar")
-	public ResponseEntity<UsuarioModel> Post(@RequestBody UsuarioModel user){
-		return ResponseEntity.status(HttpStatus.CREATED)
-				.body(service.cadastrarUsuario(user));
+	public ResponseEntity<UsuarioModel> Post(@RequestBody UsuarioModel user) {
+		return ResponseEntity.status(HttpStatus.CREATED).body(service.cadastrarUsuario(user));
 	}
+
 	@ApiOperation(value = "Atualiza um usuário")
-    @ApiResponses(value = { @ApiResponse(code = 201, message = "Atualização efetuada"),
-    @ApiResponse(code = 400, message = "Usuário inexistente no sistema") })
+	@ApiResponses(value = { @ApiResponse(code = 201, message = "Atualização efetuada"),
+			@ApiResponse(code = 400, message = "Usuário inexistente no sistema") })
 	@PutMapping("/atualizar")
 	public ResponseEntity<UsuarioModel> alterarUsuario(@Valid @RequestBody UsuarioModel alterarUsuario) {
 		return ResponseEntity.status(201).body(repositorio.save(alterarUsuario));
 
 	}
+
 	@ApiOperation(value = "Deleta um usuario do sistema")
-    @ApiResponses(value = { @ApiResponse(code = 200, message = "Usuário deletado"),
-    @ApiResponse(code = 400, message = "Usuário inexistente no sistema") })
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Usuário deletado"),
+			@ApiResponse(code = 400, message = "Usuário inexistente no sistema") })
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<UsuarioModel> deleteUsuario(@Valid @PathVariable Long id) { 
+	public ResponseEntity<UsuarioModel> deleteUsuario(@Valid @PathVariable Long id) {
 		Optional<UsuarioModel> objetoOptional = repositorio.findById(id);
 		if (objetoOptional.isPresent()) {
 			repositorio.deleteById(id);
@@ -92,6 +94,9 @@ public class UsuarioController {
 
 	}
 
+	@ApiOperation(value = "Procura um usuario por ID")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Usuario encontrado"),
+			@ApiResponse(code = 204, message = "Usuario inexistente no sistema") })
 	@GetMapping("/{id}")
 	public ResponseEntity<UsuarioModel> findAllById(@Valid @PathVariable Long id) {
 		return repositorio.findById(id).map(resp -> ResponseEntity.status(200).body(resp))
