@@ -71,6 +71,9 @@ public class PostagemController {
 		return ResponseEntity.ok(repositorio.save(postagem));
 	}
 
+	@ApiOperation(value = "Deleta uma postagem")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Postagem deletada"),
+			@ApiResponse(code = 400, message = "Não existe essa postagem no sistema") })
 	@DeleteMapping("/excluir/{id}")
 	public ResponseEntity<PostagemModel> excluir(@Valid @PathVariable Long id) {
 		Optional<PostagemModel> objetoOptional = repositorio.findById(id);
