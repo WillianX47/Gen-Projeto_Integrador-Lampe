@@ -22,8 +22,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+
 @RestController
 @RequestMapping("api/v1/usuario")
+@Api(tags = "Controlador de usuario", description = "Utilitário de usuario")
 @CrossOrigin("*")
 public class UsuarioController {
 
@@ -31,6 +37,9 @@ public class UsuarioController {
 
 	private @Autowired UsuarioService service;
 
+	@ApiOperation(value = "Procura todos os usuários cadastrados no sistema")
+    @ApiResponses(value = { @ApiResponse(code = 200, message = "Usuários encontrados"),
+    @ApiResponse(code = 204, message = "Não existe usuários no sistema") })
 	@GetMapping
 	public ResponseEntity<List<UsuarioModel>> findAll() {
 		List<UsuarioModel> objetoUsuario = repositorio.findAll();
@@ -43,12 +52,17 @@ public class UsuarioController {
 
 	}
 
+	@ApiOperation(value = "Executa o login de usuario")
+    @ApiResponses(value = { @ApiResponse(code = 200, message = "Login efetuado"),
+    @ApiResponse(code = 401, message = "Usuario ou senha incorreto") })
 	@PostMapping("/login")
 	public ResponseEntity<UsuarioLogin> Autentication(@RequestBody Optional<UsuarioLogin> user) {
 		return service.logar(user).map(resp -> ResponseEntity.ok(resp))
 				.orElse(ResponseEntity.status(HttpStatus.UNAUTHORIZED).build());
 	}
-	
+	@ApiOperation(value = "Realiza o cadastro de usuario")
+    @ApiResponses(value = { @ApiResponse(code = 201, message = "Cadastro efetuado"),
+    @ApiResponse(code = 400, message = "Usuário já existe no sistema") })
 	@PostMapping("/cadastrar")
 	public ResponseEntity<UsuarioModel> Post(@RequestBody UsuarioModel user){
 		return ResponseEntity.status(HttpStatus.CREATED)
@@ -62,7 +76,7 @@ public class UsuarioController {
 	}
 
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<UsuarioModel> deleteUsuario(@Valid @PathVariable Long id) {
+	public ResponseEntity<UsuarioModel> deleteUsuario(@Valid @PathVariable Long id) { 
 		Optional<UsuarioModel> objetoOptional = repositorio.findById(id);
 		if (objetoOptional.isPresent()) {
 			repositorio.deleteById(id);
