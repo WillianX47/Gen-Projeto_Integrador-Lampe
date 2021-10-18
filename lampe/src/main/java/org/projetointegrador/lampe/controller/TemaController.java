@@ -72,6 +72,9 @@ public class TemaController {
 				.orElse(ResponseEntity.status(204).build());
 	}
 
+	@ApiOperation(value = "Excluir um tema")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Tema deletada"),
+			@ApiResponse(code = 400, message = "Não existe esse tema no sistema") })
 	@DeleteMapping("/excluir/{id}")
 	public ResponseEntity<TemaModel> excluirTema(@Valid @PathVariable Long id) {
 		Optional<TemaModel> objetoOptional = repositorio.findById(id);
