@@ -68,13 +68,17 @@ public class UsuarioController {
 		return ResponseEntity.status(HttpStatus.CREATED)
 				.body(service.cadastrarUsuario(user));
 	}
-
+	@ApiOperation(value = "Atualiza um usuário")
+    @ApiResponses(value = { @ApiResponse(code = 201, message = "Atualização efetuada"),
+    @ApiResponse(code = 400, message = "Usuário inexistente no sistema") })
 	@PutMapping("/atualizar")
 	public ResponseEntity<UsuarioModel> alterarUsuario(@Valid @RequestBody UsuarioModel alterarUsuario) {
 		return ResponseEntity.status(201).body(repositorio.save(alterarUsuario));
 
 	}
-
+	@ApiOperation(value = "Deleta um usuario do sistema")
+    @ApiResponses(value = { @ApiResponse(code = 200, message = "Usuário deletado"),
+    @ApiResponse(code = 400, message = "Usuário inexistente no sistema") })
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<UsuarioModel> deleteUsuario(@Valid @PathVariable Long id) { 
 		Optional<UsuarioModel> objetoOptional = repositorio.findById(id);
