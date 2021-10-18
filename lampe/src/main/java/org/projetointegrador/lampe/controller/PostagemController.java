@@ -19,13 +19,22 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RequestMapping("/api/v1/postagem")
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+
 @RestController
+@RequestMapping("/api/v1/postagem")
+@Api(tags = "Controlador de postagem", description = "Utilitário de postagem")
 @CrossOrigin("*")
 public class PostagemController {
 
 	private @Autowired PostagemRepository repositorio;
 
+	@ApiOperation(value = "Procura todas as postagens cadastrados no sistema")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Postagens encontradas"),
+			@ApiResponse(code = 204, message = "Não existem postagens no sistema") })
 	@GetMapping
 	public ResponseEntity<List<PostagemModel>> findAll() {
 		List<PostagemModel> postagem = repositorio.findAll();
@@ -37,22 +46,34 @@ public class PostagemController {
 
 	}
 
+	@ApiOperation(value = "Procura uma postagem por ID")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Postagem encontrada"),
+			@ApiResponse(code = 204, message = "Postagem inexistente no sistema") })
 	@GetMapping("/{id}")
 	public ResponseEntity<PostagemModel> findAllById(@Valid @PathVariable Long id) {
 		return repositorio.findById(id).map(resp -> ResponseEntity.ok(resp)).orElse(ResponseEntity.status(204).build());
 
 	}
 
+	@ApiOperation(value = "Salva uma postagem")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Postagem salva"),
+			@ApiResponse(code = 400, message = "Erro no body") })
 	@PostMapping("/salvar")
 	public ResponseEntity<PostagemModel> inserir(@Valid @RequestBody PostagemModel postagem) {
 		return ResponseEntity.status(200).body(repositorio.save(postagem));
 	}
 
+	@ApiOperation(value = "Atualiza uma postagem")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Postagem atualizada"),
+			@ApiResponse(code = 204, message = "Não existe essa postagem no sistema") })
 	@PutMapping("/atualizar")
 	public ResponseEntity<PostagemModel> alterar(@Valid @RequestBody PostagemModel postagem) {
 		return ResponseEntity.ok(repositorio.save(postagem));
 	}
 
+	@ApiOperation(value = "Deleta uma postagem")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Postagem deletada"),
+			@ApiResponse(code = 400, message = "Não existe essa postagem no sistema") })
 	@DeleteMapping("/excluir/{id}")
 	public ResponseEntity<PostagemModel> excluir(@Valid @PathVariable Long id) {
 		Optional<PostagemModel> objetoOptional = repositorio.findById(id);
