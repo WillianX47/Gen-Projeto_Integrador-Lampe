@@ -8,25 +8,41 @@ import org.projetointegrador.lampe.model.UsuarioLogin;
 import org.projetointegrador.lampe.model.UsuarioModel;
 import org.projetointegrador.lampe.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 
 @Service
 public class UsuarioService {
 	
-	private @Autowired UsuarioRepository repositorio;
+	private @Autowired UsuarioRepository repository;
+	
+	public static String encriptadorSenha(String senha) {
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		return encoder.encode(senha);
+	}
+	
+	public Optional<Object> usuarioExistente(UsuarioModel usuario){
+		return repository.findByEmailUsuario(usuario.getEmailUsuario()).map(resp -> {
+			return Optional.empty();
+		}).orElseGet(() -> {
+			usuario.setSenhaUsuario(encriptadorSenha(usuario.getSenhaUsuario()));
+			return Optional.ofNullable(repository.save(usuario));
+		});
+	}
 	
 	public UsuarioModel cadastrarUsuario (UsuarioModel usuario) {
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		String senhaEncoder = encoder.encode(usuario.getSenhaUsuario());
 		usuario.setSenhaUsuario(senhaEncoder);
-		return repositorio.save(usuario);
+		return repository.save(usuario);
 	}
 	
 	public Optional<UsuarioLogin> logar(Optional<UsuarioLogin> user) {
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-		Optional<UsuarioModel> usuario = repositorio.findByEmailUsuario(user.get().getEmailUsuario());
+		Optional<UsuarioModel> usuario = repository.findByEmailUsuario(user.get().getEmailUsuario());
 		if (usuario.isPresent()) {
 			if (encoder.matches(user.get().getSenhaUsuario(), usuario.get().getSenhaUsuario())) {
 				String auth = user.get().getEmailUsuario() + ":" + user.get().getSenhaUsuario();
@@ -39,9 +55,11 @@ public class UsuarioService {
 				user.get().setEmailUsuario(usuario.get().getEmailUsuario());
 				user.get().setSenhaUsuario(usuario.get().getSenhaUsuario());
 				return user;
+			} else {
+				throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Senha incorreta");
 			}
 		}
-		return Optional.empty();
+		throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email incorreto");
 	}
 
 }
