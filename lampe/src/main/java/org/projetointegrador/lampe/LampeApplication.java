@@ -12,13 +12,13 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/")
 public class LampeApplication {
 
-    @GetMapping
-    public ModelAndView swaggerUi() {
-    return new ModelAndView("redirect:/swagger-ui/");
-    }
+	@GetMapping
+	public ModelAndView swaggerUi() {
+		return new ModelAndView("redirect:/swagger-ui/");
+	}
 
-    public static void main(String[] args) {
-        SpringApplication.run(LampeApplication.class, args);
-    }
+	public static void main(String[] args) {
+		SpringApplication.run(LampeApplication.class, args);
+	}
 
 }

@@ -1,34 +1,22 @@
 package org.projetointegrador.lampe.model;
 
-/**
- * Class espelho de Usuario
- */
+// Class espelho de Usuario 
 public class UsuarioLogin {
-	
-	/**
-	 * Nome do Usuario
-	 */
+
+	// ID do usuario
+	private Long id;
+
+	// Nome do Usuario
 	private String nomeUsuario;
-	
-	/**
-	 * Email do Usuario
-	 */
+
+	// Email do Usuario
 	private String emailUsuario;
 
-	/**
-	 * Senha do Usuario
-	 */
+	// Senha do usuario
 	private String senhaUsuario;
 
-	/**
-	 * Token do Usuario
-	 */
+	// Token do usuario
 	private String token;
-
-	/**
-	 * Id do Usuario
-	 */
-	private Long id;
 
 	public String getNomeUsuario() {
 		return nomeUsuario;
@@ -69,5 +57,5 @@ public class UsuarioLogin {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	
+
 }
