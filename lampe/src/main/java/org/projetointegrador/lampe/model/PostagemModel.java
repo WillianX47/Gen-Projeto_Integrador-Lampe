@@ -11,34 +11,45 @@ import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+/**
+ * Cria uma tabela no banco de dados com o nome "tb_postagem"
+ * 
+ */
 @Entity
 @Table(name = "tb_postagem")
 public class PostagemModel {
 
+	// Gera o id automaticamente
 	private @Id @GeneratedValue(strategy = GenerationType.IDENTITY) Long id;
 
+	// Gera o atributo que recebe o texto da postagem
 	private @NotBlank String textoPostagem;
 
+	// Gera o atributo anexo postagem
 	private String anexoPostagem;
 
+	// Gera o atributo que define a privacidade da postagem
 	private @NotBlank String privacidade;
-
-	private String localizacaoPostagem;
 	
+	// Gera o atributo que recebe a localizacao da postagem
+	private String localizacaoPostagem;
+
+	// Link tabela ManyToOne para a tabela de tema
 	@ManyToOne
 	@JoinColumn(name = "tema_id")
-	@JsonIgnoreProperties({"postagens"})
+	@JsonIgnoreProperties({ "postagens" })
 	private TemaModel temaPostagem;
-	
+
+	// Link tabela ManyToOne para a tabela de usuario
 	@ManyToOne
 	@JoinColumn(name = "usuario_id")
-	@JsonIgnoreProperties({"postagens"})
+	@JsonIgnoreProperties({ "postagens" })
 	private UsuarioModel usuarioPostagem;
-	
+
 	public TemaModel getTemaPostagem() {
 		return temaPostagem;
 	}
-	
+
 	public void setTemaPostagem(TemaModel temaPostagem) {
 		this.temaPostagem = temaPostagem;
 	}
