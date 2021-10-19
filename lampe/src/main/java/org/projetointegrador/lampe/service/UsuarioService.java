@@ -13,18 +13,17 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-
 @Service
 public class UsuarioService {
-	
+
 	private @Autowired UsuarioRepository repository;
-	
+
 	public static String encriptadorSenha(String senha) {
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		return encoder.encode(senha);
 	}
-	
-	public Optional<Object> usuarioExistente(UsuarioModel usuario){
+
+	public Optional<Object> cadastrarUsuario(UsuarioModel usuario) {
 		return repository.findByEmailUsuario(usuario.getEmailUsuario()).map(resp -> {
 			return Optional.empty();
 		}).orElseGet(() -> {
@@ -32,14 +31,7 @@ public class UsuarioService {
 			return Optional.ofNullable(repository.save(usuario));
 		});
 	}
-	
-	public UsuarioModel cadastrarUsuario (UsuarioModel usuario) {
-		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-		String senhaEncoder = encoder.encode(usuario.getSenhaUsuario());
-		usuario.setSenhaUsuario(senhaEncoder);
-		return repository.save(usuario);
-	}
-	
+
 	public Optional<UsuarioLogin> logar(Optional<UsuarioLogin> user) {
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		Optional<UsuarioModel> usuario = repository.findByEmailUsuario(user.get().getEmailUsuario());
@@ -48,7 +40,7 @@ public class UsuarioService {
 				String auth = user.get().getEmailUsuario() + ":" + user.get().getSenhaUsuario();
 				byte[] encodedAuth = Base64.encodeBase64(auth.getBytes(Charset.forName("US-ASCII")));
 				String authHeader = "Basic " + new String(encodedAuth);
-			
+
 				user.get().setToken(authHeader);
 				user.get().setId(usuario.get().getId());
 				user.get().setNomeUsuario(usuario.get().getNomeUsuario());

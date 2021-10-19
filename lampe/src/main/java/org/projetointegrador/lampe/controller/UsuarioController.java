@@ -41,7 +41,7 @@ public class UsuarioController {
 			@ApiResponse(code = 400, message = "Usuário já existe no sistema") })
 	@PostMapping("/cadastrar")
 	public ResponseEntity<Object> Post(@RequestBody UsuarioModel user) {
-		return service.usuarioExistente(user).map(resp -> ResponseEntity.status(201).body(resp))
+		return service.cadastrarUsuario(user).map(resp -> ResponseEntity.status(201).body(resp))
 				.orElse(ResponseEntity.status(400).build());
 	}
 
