@@ -14,14 +14,23 @@ import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+
+/**
+ * Cria uma tabela no banco de dados com o nome "tb_tema"
+ * 
+ */
 @Entity
 @Table(name = "tb_tema")
 public class TemaModel {
 	
+	// Gera o id automaticamente
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	/**
+	 * Define a quantidade de caracteres de um tema
+	 */
 	@Size(min = 5, max = 100)
 	private String primarioTema;
 	
@@ -31,6 +40,7 @@ public class TemaModel {
 	@Size(min = 5, max = 100)
 	private String eventosTema;
 	
+	// Link tabela OneToMany para a tabela de postagem
 	@OneToMany(mappedBy = "temaPostagem", cascade = CascadeType.REMOVE)
 	@JsonIgnoreProperties({"temaPostagem"})
 	private List<PostagemModel> postagens = new ArrayList<>();

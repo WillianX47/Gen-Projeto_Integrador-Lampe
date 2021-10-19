@@ -14,18 +14,27 @@ import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+/**
+ * Cria uma tabela no banco de dados com o nome "tb_usuario"
+ * 
+ */
 @Entity
 @Table(name = "tb_usuario")
 public class UsuarioModel {
 
+	// Gera o id automaticamente
 	private @Id @GeneratedValue(strategy = GenerationType.IDENTITY) Long id;
 
+	// Cria o atributo do nome do usuario
 	private @NotBlank String nomeUsuario;
 
+	// Cria o atributo do email do usuario
 	private @NotBlank String emailUsuario;
 
+	// Cria o atributo da senha do usuario
 	private @NotBlank String senhaUsuario;
 
+	// Link tabela OneToMany para a tabela de postagem
 	@OneToMany(mappedBy = "usuarioPostagem", cascade = CascadeType.REMOVE)
 	@JsonIgnoreProperties({ "usuarioPostagem" })
 	private List<PostagemModel> postagens = new ArrayList<>();
