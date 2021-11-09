@@ -32,12 +32,23 @@ public class UsuarioModel {
 	private @NotBlank String emailUsuario;
 
 	// Cria o atributo da senha do usuario
-	private @NotBlank String senhaUsuario;
+	private @NotBlank String senhaUsuario;// Cria um atributo do tipo foto
+
+	// Cria um atributo do tipo foto
+	private String foto;
 
 	// Link tabela OneToMany para a tabela de postagem
 	@OneToMany(mappedBy = "usuarioPostagem", cascade = CascadeType.REMOVE)
 	@JsonIgnoreProperties({ "usuarioPostagem" })
 	private List<PostagemModel> postagens = new ArrayList<>();
+
+	public String getFoto() {
+		return foto;
+	}
+
+	public void setFoto(String foto) {
+		this.foto = foto;
+	}
 
 	public Long getId() {
 		return id;
