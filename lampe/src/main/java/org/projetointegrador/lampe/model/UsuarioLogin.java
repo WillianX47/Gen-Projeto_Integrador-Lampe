@@ -18,6 +18,17 @@ public class UsuarioLogin {
 	// Token do usuario
 	private String token;
 
+	// Foto do usuario
+	private String foto;
+
+	public String getFoto() {
+		return foto;
+	}
+
+	public void setFoto(String foto) {
+		this.foto = foto;
+	}
+
 	public String getNomeUsuario() {
 		return nomeUsuario;
 	}
