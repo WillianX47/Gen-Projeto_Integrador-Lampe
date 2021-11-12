@@ -60,6 +60,14 @@ public class UsuarioModel {
 		return nomeUsuario;
 	}
 
+	public List<PostagemModel> getPostagens() {
+		return postagens;
+	}
+
+	public void setPostagens(List<PostagemModel> postagens) {
+		this.postagens = postagens;
+	}
+
 	public void setNomeUsuario(String nomeUsuario) {
 		this.nomeUsuario = nomeUsuario;
 	}
@@ -79,4 +87,5 @@ public class UsuarioModel {
 	public void setSenhaUsuario(String senhaUsuario) {
 		this.senhaUsuario = senhaUsuario;
 	}
+	
 }
