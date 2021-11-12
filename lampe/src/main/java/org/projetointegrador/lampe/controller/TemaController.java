@@ -47,14 +47,14 @@ public class TemaController {
 	}
 
 	@ApiOperation(value = "Salvar um tema")
-	@ApiResponses(value = { @ApiResponse(code = 200, message = "Tema salvar"),})
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Tema salvar"), })
 	@PostMapping("/salvar")
 	public ResponseEntity<TemaModel> novoTema(@Valid @RequestBody TemaModel novoTema) {
 		return ResponseEntity.status(201).body(repository.save(novoTema));
 	}
 
 	@ApiOperation(value = "Atualizar um tema")
-	@ApiResponses(value = { @ApiResponse(code = 200, message = "Tema atualizado"),})
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Tema atualizado"), })
 	@PutMapping("/atualizar")
 	public ResponseEntity<TemaModel> alterarTema(@Valid @RequestBody TemaModel alterarTema) {
 		return ResponseEntity.status(200).body(repository.save(alterarTema));
@@ -62,27 +62,27 @@ public class TemaController {
 	}
 
 	@ApiOperation(value = "Procura um tema por Id")
-    @ApiResponses(value = { @ApiResponse(code = 200, message = "Tema encontrado"),
-            @ApiResponse(code = 404, message = "Tema inexistente no sistema") })
-    @GetMapping("/pesquisar")
-    public ResponseEntity<TemaModel> findAllById(@Valid @RequestParam(defaultValue = "") Long id) {
-        return repository.findById(id).map(resp -> ResponseEntity.ok(resp)).orElseThrow(() -> {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Tema inexistente");
-        });
-    }
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Tema encontrado"),
+			@ApiResponse(code = 404, message = "Tema inexistente no sistema") })
+	@GetMapping("/pesquisar")
+	public ResponseEntity<TemaModel> findAllById(@Valid @RequestParam(defaultValue = "") Long id) {
+		return repository.findById(id).map(resp -> ResponseEntity.ok(resp)).orElseThrow(() -> {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Tema inexistente");
+		});
+	}
 
 	@ApiOperation(value = "Excluir um tema")
-    @ApiResponses(value = { @ApiResponse(code = 200, message = "Tema deletada"),
-            @ApiResponse(code = 404, message = "Não existe esse tema no sistema") })
-    @DeleteMapping("/excluir")
-    public ResponseEntity<Object> excluirTema(@Valid @RequestParam(defaultValue = "") Long id) {
-        return repository.findById(id).map(resp -> {
-            repository.deleteById(id);
-            return ResponseEntity.status(200).build();
-        }).orElseThrow(() -> {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Tema inexistente");
-        });
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Tema deletada"),
+			@ApiResponse(code = 404, message = "Não existe esse tema no sistema") })
+	@DeleteMapping("/excluir")
+	public ResponseEntity<Object> excluirTema(@Valid @RequestParam(defaultValue = "") Long id) {
+		return repository.findById(id).map(resp -> {
+			repository.deleteById(id);
+			return ResponseEntity.status(200).build();
+		}).orElseThrow(() -> {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Tema inexistente");
+		});
 
-    }
+	}
 
 }

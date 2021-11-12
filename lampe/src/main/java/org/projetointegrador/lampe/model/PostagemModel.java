@@ -11,10 +11,8 @@ import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-/**
- * Cria uma tabela no banco de dados com o nome "tb_postagem"
- * 
- */
+// Cria uma tabela no banco de dados com o nome "tb_postagem"
+
 @Entity
 @Table(name = "tb_postagem")
 public class PostagemModel {
@@ -30,7 +28,7 @@ public class PostagemModel {
 
 	// Gera o atributo que define a privacidade da postagem
 	private @NotBlank String privacidade;
-	
+
 	// Gera o atributo que recebe a localizacao da postagem
 	private String localizacaoPostagem;
 

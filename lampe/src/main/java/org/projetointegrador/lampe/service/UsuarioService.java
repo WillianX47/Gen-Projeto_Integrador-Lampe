@@ -9,6 +9,7 @@ import org.projetointegrador.lampe.model.UsuarioModel;
 import org.projetointegrador.lampe.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -18,6 +19,10 @@ public class UsuarioService {
 
 	private @Autowired UsuarioRepository repository;
 
+	public ResponseEntity<UsuarioModel> getUsuarioById(Long id){
+		return repository.findById(id).map(resp -> ResponseEntity.ok(resp)).orElse(ResponseEntity.notFound().build());
+	}
+	
 	public static String encriptadorSenha(String senha) {
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		return encoder.encode(senha);
