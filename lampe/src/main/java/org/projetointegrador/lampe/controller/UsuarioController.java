@@ -28,7 +28,10 @@ import io.swagger.annotations.ApiResponses;
 public class UsuarioController {
 
 	private @Autowired UsuarioService service;
-
+	
+	@ApiOperation(value = "Encontra um usuario por id")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Usuario encontrado"),
+			@ApiResponse(code = 404, message = "Usuario nao encontrado") })
 	@GetMapping("/{id}")
 	public ResponseEntity<UsuarioModel> getUsuarioById(@PathVariable Long id) {
 		return service.getUsuarioById(id);
