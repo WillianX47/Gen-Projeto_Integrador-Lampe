@@ -14,10 +14,8 @@ import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-/**
- * Cria uma tabela no banco de dados com o nome "tb_usuario"
- * 
- */
+// Cria uma tabela no banco de dados com o nome "tb_usuario"
+
 @Entity
 @Table(name = "tb_usuario")
 public class UsuarioModel {

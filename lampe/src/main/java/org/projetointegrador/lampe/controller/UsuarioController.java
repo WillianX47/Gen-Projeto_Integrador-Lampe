@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,10 +28,18 @@ import io.swagger.annotations.ApiResponses;
 public class UsuarioController {
 
 	private @Autowired UsuarioService service;
+	
+	@ApiOperation(value = "Encontra um usuario por id")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Usuario encontrado"),
+			@ApiResponse(code = 404, message = "Usuario nao encontrado") })
+	@GetMapping("/{id}")
+	public ResponseEntity<UsuarioModel> getUsuarioById(@PathVariable Long id) {
+		return service.getUsuarioById(id);
+	}
 
 	@ApiOperation(value = "Executa o login de usuario")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Login efetuado"),
-			@ApiResponse(code = 401, message = "Usuario ou senha incorreto") })
+			@ApiResponse(code = 400, message = "Usuario ou senha incorreto") })
 	@PostMapping("/login")
 	public ResponseEntity<UsuarioLogin> Autentication(@RequestBody Optional<UsuarioLogin> user) {
 		return service.logar(user).map(resp -> ResponseEntity.ok(resp))

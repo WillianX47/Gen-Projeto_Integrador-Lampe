@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.validation.Valid;
 
-import org.apache.catalina.startup.ClassLoaderFactory.Repository;
 import org.projetointegrador.lampe.model.PostagemModel;
 import org.projetointegrador.lampe.repository.PostagemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,7 +57,7 @@ public class PostagemController {
 	}
 
 	@ApiOperation(value = "Salva uma postagem")
-	@ApiResponses(value = { @ApiResponse(code = 200, message = "Postagem salva"),})
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Postagem salva"), })
 	@PostMapping("/salvar")
 	public ResponseEntity<PostagemModel> inserir(@Valid @RequestBody PostagemModel postagem) {
 		return ResponseEntity.status(200).body(repository.save(postagem));
