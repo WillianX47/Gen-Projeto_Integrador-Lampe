@@ -36,6 +36,17 @@ public class UsuarioService {
 			return Optional.ofNullable(repository.save(usuario));
 		});
 	}
+	public ResponseEntity<UsuarioModel> atualizarUsuario(UsuarioModel upUsuario){
+		return repository.findById(upUsuario.getId()).map(resp -> {
+			resp.setNomeUsuario(upUsuario.getNomeUsuario());
+			resp.setFoto(upUsuario.getFoto());
+			resp.setEmailUsuario(upUsuario.getEmailUsuario());
+			resp.setSenhaUsuario(encriptadorSenha(upUsuario.getSenhaUsuario()));
+			return ResponseEntity.ok(repository.save(resp));
+		}).orElseGet(() -> {
+			return ResponseEntity.badRequest().build();
+		});
+	}
 
 	public Optional<UsuarioLogin> logar(Optional<UsuarioLogin> user) {
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();

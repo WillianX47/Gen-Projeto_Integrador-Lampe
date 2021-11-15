@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -53,6 +54,10 @@ public class UsuarioController {
 	public ResponseEntity<Object> Post(@RequestBody UsuarioModel user) {
 		return service.cadastrarUsuario(user).map(resp -> ResponseEntity.status(201).body(resp))
 				.orElse(ResponseEntity.status(400).build());
+	}
+	@PutMapping("/atualizar")
+	public ResponseEntity<UsuarioModel> put(@RequestBody UsuarioModel userUpdate){
+		return service.atualizarUsuario(userUpdate);
 	}
 
 }
