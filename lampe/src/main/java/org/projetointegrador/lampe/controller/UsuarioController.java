@@ -29,7 +29,7 @@ import io.swagger.annotations.ApiResponses;
 public class UsuarioController {
 
 	private @Autowired UsuarioService service;
-	
+
 	@ApiOperation(value = "Encontra um usuario por id")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Usuario encontrado"),
 			@ApiResponse(code = 404, message = "Usuario nao encontrado") })
@@ -55,8 +55,12 @@ public class UsuarioController {
 		return service.cadastrarUsuario(user).map(resp -> ResponseEntity.status(201).body(resp))
 				.orElse(ResponseEntity.status(400).build());
 	}
+
+	@ApiOperation(value = "Atualiza um usuário no sistema usando seu ID.")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Usuário atualizado."),
+			@ApiResponse(code = 400, message = "Usuário inexistente.") })
 	@PutMapping("/atualizar")
-	public ResponseEntity<UsuarioModel> put(@RequestBody UsuarioModel userUpdate){
+	public ResponseEntity<UsuarioModel> put(@RequestBody UsuarioModel userUpdate) {
 		return service.atualizarUsuario(userUpdate);
 	}
 

@@ -19,10 +19,10 @@ public class UsuarioService {
 
 	private @Autowired UsuarioRepository repository;
 
-	public ResponseEntity<UsuarioModel> getUsuarioById(Long id){
+	public ResponseEntity<UsuarioModel> getUsuarioById(Long id) {
 		return repository.findById(id).map(resp -> ResponseEntity.ok(resp)).orElse(ResponseEntity.notFound().build());
 	}
-	
+
 	public static String encriptadorSenha(String senha) {
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		return encoder.encode(senha);
@@ -36,7 +36,8 @@ public class UsuarioService {
 			return Optional.ofNullable(repository.save(usuario));
 		});
 	}
-	public ResponseEntity<UsuarioModel> atualizarUsuario(UsuarioModel upUsuario){
+
+	public ResponseEntity<UsuarioModel> atualizarUsuario(UsuarioModel upUsuario) {
 		return repository.findById(upUsuario.getId()).map(resp -> {
 			resp.setNomeUsuario(upUsuario.getNomeUsuario());
 			resp.setFoto(upUsuario.getFoto());
