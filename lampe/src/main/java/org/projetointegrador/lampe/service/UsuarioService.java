@@ -63,6 +63,7 @@ public class UsuarioService {
 				user.get().setNomeUsuario(usuario.get().getNomeUsuario());
 				user.get().setEmailUsuario(usuario.get().getEmailUsuario());
 				user.get().setSenhaUsuario(usuario.get().getSenhaUsuario());
+				user.get().setFoto(usuario.get().getFoto());
 				return user;
 			} else {
 				throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Senha incorreta");
