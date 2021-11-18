@@ -20,6 +20,8 @@ public class UsuarioLogin {
 
 	// Foto do usuario
 	private String foto;
+	
+	private String titulo;
 
 	public String getFoto() {
 		return foto;
@@ -67,6 +69,14 @@ public class UsuarioLogin {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public String getTitulo() {
+		return titulo;
+	}
+
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
 	}
 
 }
