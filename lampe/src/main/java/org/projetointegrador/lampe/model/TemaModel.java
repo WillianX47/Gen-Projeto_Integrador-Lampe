@@ -30,7 +30,7 @@ public class TemaModel {
 	private @Size(min = 5, max = 100) String eventosTema;
 
 	// Link tabela OneToMany para a tabela de postagem
-	@OneToMany(mappedBy = "temaPostagem", cascade = CascadeType.REMOVE)
+	@OneToMany(mappedBy = "temaPostagem", cascade = CascadeType.ALL)
 	@JsonIgnoreProperties({ "temaPostagem" })
 	private List<PostagemModel> postagens = new ArrayList<>();
 
