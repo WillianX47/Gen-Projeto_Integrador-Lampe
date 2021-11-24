@@ -34,7 +34,8 @@ public class UsuarioModel {
 
 	// Cria um atributo do tipo foto
 	private String foto;
-
+	
+	
 	// Link tabela OneToMany para a tabela de postagem
 	@OneToMany(mappedBy = "usuarioPostagem", cascade = CascadeType.ALL)
 	@JsonIgnoreProperties({ "usuarioPostagem" })
@@ -87,5 +88,5 @@ public class UsuarioModel {
 	public void setSenhaUsuario(String senhaUsuario) {
 		this.senhaUsuario = senhaUsuario;
 	}
-	
+
 }

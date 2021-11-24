@@ -19,10 +19,10 @@ public class UsuarioService {
 
 	private @Autowired UsuarioRepository repository;
 
-	public ResponseEntity<UsuarioModel> getUsuarioById(Long id){
+	public ResponseEntity<UsuarioModel> getUsuarioById(Long id) {
 		return repository.findById(id).map(resp -> ResponseEntity.ok(resp)).orElse(ResponseEntity.notFound().build());
 	}
-	
+
 	public static String encriptadorSenha(String senha) {
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		return encoder.encode(senha);
@@ -34,6 +34,18 @@ public class UsuarioService {
 		}).orElseGet(() -> {
 			usuario.setSenhaUsuario(encriptadorSenha(usuario.getSenhaUsuario()));
 			return Optional.ofNullable(repository.save(usuario));
+		});
+	}
+
+	public ResponseEntity<UsuarioModel> atualizarUsuario(UsuarioModel upUsuario) {
+		return repository.findById(upUsuario.getId()).map(resp -> {
+			resp.setNomeUsuario(upUsuario.getNomeUsuario());
+			resp.setFoto(upUsuario.getFoto());
+			resp.setEmailUsuario(upUsuario.getEmailUsuario());
+			resp.setSenhaUsuario(encriptadorSenha(upUsuario.getSenhaUsuario()));
+			return ResponseEntity.ok(repository.save(resp));
+		}).orElseGet(() -> {
+			return ResponseEntity.badRequest().build();
 		});
 	}
 
@@ -51,6 +63,7 @@ public class UsuarioService {
 				user.get().setNomeUsuario(usuario.get().getNomeUsuario());
 				user.get().setEmailUsuario(usuario.get().getEmailUsuario());
 				user.get().setSenhaUsuario(usuario.get().getSenhaUsuario());
+				user.get().setFoto(usuario.get().getFoto());
 				return user;
 			} else {
 				throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Senha incorreta");

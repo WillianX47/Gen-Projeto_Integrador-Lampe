@@ -19,6 +19,9 @@ public class PostagemModel {
 
 	// Gera o id automaticamente
 	private @Id @GeneratedValue(strategy = GenerationType.IDENTITY) Long id;
+	
+	// Cria um atributo de título da postagem
+	private String titulo;
 
 	// Gera o atributo que recebe o texto da postagem
 	private @NotBlank String textoPostagem;
@@ -66,6 +69,14 @@ public class PostagemModel {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public String getTitulo() {
+		return titulo;
+	}
+
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
 	}
 
 	public String getTextoPostagem() {
