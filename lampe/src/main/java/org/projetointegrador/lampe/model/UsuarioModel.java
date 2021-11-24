@@ -37,7 +37,7 @@ public class UsuarioModel {
 	
 	
 	// Link tabela OneToMany para a tabela de postagem
-	@OneToMany(mappedBy = "usuarioPostagem", cascade = CascadeType.REMOVE)
+	@OneToMany(mappedBy = "usuarioPostagem", cascade = CascadeType.ALL)
 	@JsonIgnoreProperties({ "usuarioPostagem" })
 	private List<PostagemModel> postagens = new ArrayList<>();
 
